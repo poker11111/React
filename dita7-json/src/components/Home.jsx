@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react'
 import BlogList from './BlogList.jsx'
 
 function Home() {
-    const [list, setList] = useState([
-          {id: 1, name: "Amr",age: 25,city: "Prizren"},
-          {id: 2, name: "Arianit",age: 31,city: "Prizren"},
-          {id: 3, name: "Ardian",age: 29,city: "Prishtine"},
-          {id: 4, name: "Arbnor",age: 28,city: "Prizren"},
-          {id: 5, name: "Arlind",age: 27,city: "Prizren"},
-      ])
+    const [list, setList] = useState([])
 
         useEffect(() => {
-          console.log("Component loaded") 
-          console.log(list);
+         fetch('http://localhost:3000/list')
+         .then(res => {
+              return res.json()
+         })
+
+         .then(data => {
+              setList(data)
+         })
+         
+         .catch(err => {
+          console.log(err.message);
+         }
+
+         )
         }
       )
 
