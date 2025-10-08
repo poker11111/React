@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import BlogList from './BlogList.jsx'
+import './Home.css'
 
 function Home() {
     const [list, setList] = useState([])
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(true)
 
         useEffect(() => {
-         fetch('http://localhost:3000/list')
+         fetch('http://localhost:823/list')
          .then(res => {
               return res.json()
          })
 
          .then(data => {
-              setList(date)
+              setList(data)
+              setLoading(false)
          })
          
          .catch(err => {
-          setList(err.message);
+          setError("Could not fetch data")
+          setLoading(false)
          }
 
          )
@@ -29,14 +34,10 @@ function Home() {
       }
   return (
     <>
-        {/* {list.map((item) => (
-          <div key={item.id}>
-            <h2>{item.name}</h2>  
-            <p>Age: {item.age}</p>
-            <p>City: {item.city}</p>
-          </div>
-        ))} */}
-        <BlogList  list={list} x = "Lista e Nxenesve" deleteButton={deleteButton} />
+       { loading && <div><img src={myImage} alt="" /></div> }
+       { error && <div>{ error }</div> } 
+
+        {list && <BlogList  list={list} x = "Lista e Nxenesve" deleteButton={deleteButton} /> }
     </>
   )
 }
